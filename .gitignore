@@ -1,0 +1,33 @@
+## Need language specfic settings.
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Models
+data/
+
+# Intellij
+.idea/
+*.iml
+
+# Apple
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# bin or build
+build/
+bin/
+target/
+
+# List
+*.list
