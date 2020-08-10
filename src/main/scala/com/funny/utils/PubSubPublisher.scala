@@ -1,11 +1,14 @@
 package com.funny.utils
 
+import java.io.{PrintWriter, StringWriter}
+
 import com.funny.release.Releases
 import com.google.cloud.ServiceOptions
 import com.google.cloud.pubsub.v1.Publisher
 import com.google.pubsub.v1.{ProjectTopicName, PubsubMessage}
 import com.typesafe.scalalogging.LazyLogging
 import com.google.protobuf.ByteString
+
 import scala.util.Try
 
 case class PubSubException(message:String, t: Throwable) extends Exception(message, t)
@@ -27,10 +30,12 @@ object PubSubPublisher extends LazyLogging {
         )
         .get()
     } recoverWith {
-      case t: Throwable =>
+      case ex: Exception =>
+        val sw = new StringWriter
+        ex.printStackTrace(new PrintWriter(sw))
         logger.error(s"error publishing to pubsub with topic: $topicName, " +
-          s"Exception : $t, ")
-        throw PubSubException("publish releases error", t)
+          s"Exception : ${sw.toString}, ")
+        throw PubSubException("publish releases error", ex)
     }
   }
 }
