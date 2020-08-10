@@ -27,7 +27,7 @@ object Ticker extends App with LazyLogging {
   val system = ActorSystem()
 
   val tickActor = system.actorOf(Props(classOf[TickActor]))
-  val apiDataHandler = system.actorOf(Props(classOf[ApiDataHandler]), name = "ApiDataHandler")
+  val apiDataHandler = system.actorOf(Props(classOf[ApiDataHandlerActor]), name = "ApiDataHandlerActor")
   // Create a ticker that ticks every 1 minute.
   val cancellable = system.scheduler.scheduleWithFixedDelay(Duration.Zero, tickerConf.waitDuration.second, tickActor, Tick)
 

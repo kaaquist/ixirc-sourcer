@@ -13,7 +13,7 @@ import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
 import utils._
 
-class ApiDataHandler extends Actor with LazyLogging {
+class ApiDataHandlerActor extends Actor with LazyLogging {
   val formatReleaseDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
   def receive = {
     case WebData(data) =>
