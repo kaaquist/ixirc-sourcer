@@ -15,6 +15,7 @@ case class Config() extends LazyLogging {
   lazy val httpClientConf: HttpClientConf = pureconfig.loadConfigOrThrow[HttpClientConf](s"$prefixRoot.httpClient")
   lazy val ixIrcApiConf: IxIrcApiConf = pureconfig.loadConfigOrThrow[IxIrcApiConf](s"$prefixRoot.ixIrcApi")
   lazy val tickerConf: TickerConf = pureconfig.loadConfigOrThrow[TickerConf](s"$prefixRoot.tickerConfig")
+  lazy val gcpConf: GCPConf = pureconfig.loadConfigOrThrow[GCPConf](s"$prefixRoot.gcpConfig")
 }
 
 object Config {
@@ -29,5 +30,8 @@ object Config {
                          )
   case class TickerConf(
                        waitDuration: Int
+                       )
+  case class GCPConf(
+                         pubsubTopic: String
                        )
 }
