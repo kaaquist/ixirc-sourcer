@@ -1,16 +1,13 @@
 package com.funny
 
-import java.io.{PrintWriter, StringWriter}
 import java.text.SimpleDateFormat
 import java.util.Date
-
 import akka.actor.{Actor, ActorSystem, Props}
-import com.funny.utils.Config
 import com.typesafe.scalalogging.LazyLogging
-
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
+// The utils in the project.
+import utils._
 
 /**
  * Created a ticker class to trigger a call to a web api every x sec.
@@ -23,20 +20,14 @@ object Ticker extends App with LazyLogging {
     def receive = {
       case Tick =>
         val data = Sourcer.getData()
-        data andThen {
-          case Success(value) =>
-            logger.info(s"${simpleDateFormat.format(new Date(System.currentTimeMillis()))} :: $Tick  ::  ${value.body}")
-          case Failure(ex) =>
-            val sw = new StringWriter
-            ex.printStackTrace(new PrintWriter(sw))
-            logger.info(s"An error occurred: ${sw.toString}")
-        }
+        logger.debug(s"${simpleDateFormat.format(new Date(System.currentTimeMillis()))} :: $Tick")
+        apiDataHandler ! WebData(data)
     }
   }
-
   val system = ActorSystem()
 
   val tickActor = system.actorOf(Props(classOf[TickActor]))
+  val apiDataHandler = system.actorOf(Props(classOf[ApiDataHandlerActor]), name = "ApiDataHandlerActor")
   // Create a ticker that ticks every 1 minute.
   val cancellable = system.scheduler.scheduleWithFixedDelay(Duration.Zero, tickerConf.waitDuration.second, tickActor, Tick)
 
