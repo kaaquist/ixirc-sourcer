@@ -32,6 +32,8 @@ object Config {
                        waitDuration: Int
                        )
   case class GCPConf(
-                         pubsubTopic: String
+                      pubsubTopic: String,
+                      batchMessageSize: Int,
+                      googleServiceAccountEmail: String
                        )
 }
