@@ -5,10 +5,6 @@ scalaVersion := "2.13.3"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 
-PB.targets in Compile := Seq(
-  scalapb.gen() -> (sourceManaged in Compile).value / "scalapb"
-)
-
 libraryDependencies ++= {
   val akkaVersion = "2.6.8"
   val AkkaHttpVersion = "10.1.11"
@@ -29,9 +25,11 @@ libraryDependencies ++= {
     "io.circe"                                    %% "circe-generic"                                % circeVersion,
     "io.circe"                                    %% "circe-core"                                   % circeVersion,
     "de.heikoseeberger"                           %% "akka-http-circe"                              % "1.33.0",
-    "com.thesamet.scalapb"                        %% "scalapb-runtime"                              % scalapb.compiler.Version.scalapbVersion % "protobuf",
     "com.google.cloud"                            % "google-cloud-pubsub"                           % "1.108.1",
     "com.google.cloud"                            % "google-cloud-core"                             % "1.93.7",
+    // Be aware that this here is a local dependency .. Use the following project to make it work:
+    "com.funny" % "ixirc-schemas" % "0.0.1",
+
   )}
 
 cancelable in Global := true
