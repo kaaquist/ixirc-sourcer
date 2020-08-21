@@ -27,8 +27,8 @@ libraryDependencies ++= {
     "de.heikoseeberger"                           %% "akka-http-circe"                              % "1.33.0",
     "com.google.cloud"                            % "google-cloud-pubsub"                           % "1.108.1",
     "com.google.cloud"                            % "google-cloud-core"                             % "1.93.7",
-    // Be aware that this here is a local dependency .. Use the following project to make it work:
-    "com.funny" % "ixirc-schemas" % "0.0.1",
+    // Be aware that this here is a local dependency .. Use the following project to make it work: https://github.com/kaaquist/ixirc-schemas
+    "com.funny"                                   %% "ixirc-schemas"                                % "0.0.1",
 
   )}
 
